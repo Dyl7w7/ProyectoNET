@@ -1,0 +1,70 @@
+﻿@model Matissa.Models.Pedido
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link rel="stylesheet" href="~/css/pedido.css" asp-append-version="true" />
+}
+
+<div class="text-light p-3 text-center" style="background-color: #3cc3bd">
+    <h1 class="merienda">Creación de pedidos</h1>
+</div>
+@{
+    var mensaje = TempData["Mensaje"] as string;
+}
+
+@if (!string.IsNullOrEmpty(mensaje))
+{
+    <div class="alert-warning p-2 text-center">
+        @mensaje
+    </div>
+}
+<div class="container mt-5">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label asp-for="IdCliente" class="control-label">Cédula cliente</label>
+                    <select asp-for="IdCliente" class="form-control rounded-pill" asp-items="ViewBag.IdCliente">
+                        <option selected disabled>-- Clientes --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label asp-for="FechaPedido" class="control-label">Fecha pedido</label>
+                    <input asp-for="FechaPedido" class="form-control rounded-pill" />
+                    <span asp-validation-for="FechaPedido" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label asp-for="Estado" class="control-label"></label>
+                    <select asp-for="Estado" class="form-select rounded-pill">
+                        <option selected disabled>-- Estado --</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <input type="submit" value="Continuar" class="btn acept-btn" />
+            <a asp-action="Index">
+                <input type="button" class="btn cancel-btn" value="Cancelar" />
+            </a>
+        </div>
+    </form>
+</div>
+
+<div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

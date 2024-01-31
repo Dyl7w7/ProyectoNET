@@ -1,0 +1,155 @@
+﻿@using X.PagedList;
+@model IPagedList<Matissa.Models.Pedido>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<link rel="stylesheet" href="~/css/pedido.css" asp-append-version="true" />
+@{
+    <div class="text-light p-3 text-center" style="background-color: #3cc3bd">
+        <h1 class="merienda">Listado de pedidos</h1>
+    </div>
+    <div class="container mt-5">
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-floating search">
+                        <form asp-controller="Pedidos" asp-action="Index">
+                            <input type="text" class="form-control rounded-pill" name="buscar" placeholder="Buscar..." />
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <a class="btn create-pedido rounded-pill" asp-action="Reporte" asp-controller="DetallePedidos">
+                        Generar reporte de pedidos
+                    </a>
+                </div>
+                <div class="col-sm-4">
+                    <a class="btn create-pedido rounded-pill" asp-action="Create" asp-controller="Pedidos">
+                        Crear pedido
+                        <span class="material-icons">
+                            shopping_bag
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container container-tabla">
+        @{
+            var mensaje = TempData["Mensaje"] as string;
+        }
+
+        @if (!string.IsNullOrEmpty(mensaje))
+        {
+            <div class="alert-warning p-2 text-center">
+                @mensaje
+            </div>
+        }
+    <table class="tabla text-center mb-2">
+                <thead>
+                    <tr>
+                        <th>Pedido</th>
+                        <th>Cliente</th>
+                        <th>Fecha pedido</th>
+                        <th>Precio Total</th>
+                        <th>Estado</th>
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="@((item.Estado == 0) ? "background-color: #CACACA" : "")">
+                            <td>@item.IdPedido</td>
+                            <td>@item.IdClienteNavigation.NombreCliente</td>
+                            <td>@item.FechaPedido</td>
+                        @{
+                            var a = item.PrecioTotalPedido;
+
+                            string precioFormat = a.ToString("$ #,##0.00");
+                        }
+                            <td>@precioFormat</td>
+                        @{
+                            var status = item.Estado;
+                            string estado;
+                            if(status == 1)
+                            {
+                                estado = "Activo";
+                            }
+                            else
+                            {
+                                estado = "Inactivo";
+                            }
+                        }
+                            <td>@estado</td>
+                            <td>
+                                <div class="">
+                                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.IdPedido" asp-controller="Pedidos"><i class="fa-solid fa-info"></i></a>
+                                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.IdPedido" asp-controller="Pedidos"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-@item.IdPedido">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal-@item.IdPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">¿Desea eliminar?</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <i class="fa-solid fa-circle-exclamation fa-shake fa-2xl" style="color: #bd0000; font-size: 130px; margin: 50px 50px"></i>
+                                                    <br><br>
+                                                    ¿Desea eliminar el pedido "@item.IdPedido"?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdPedido" asp-controller="Pedidos">Eliminar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+    <div class="pagination-container">
+        @if (Model != null && Model.PageCount > 1)
+        {
+            <div class="d-flex justify-content-center mb-5">
+                <nav aria-label="Page navigation bg-dark">
+                    <ul class="pagination">
+
+                        <!-- Botón para la página anterior (oculto en la página 1) -->
+                        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                            <a class="page-link" href="?page=@(Model.PageNumber - 1)" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <!-- Iterar sobre las páginas disponibles -->
+                        <li class="page-item active">
+                            <span class="page-link">@Model.PageNumber</span>
+                        </li>
+
+                        <!-- Botón para la página siguiente (oculto en la última página) -->
+                        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                            <a class="page-link" href="?page=@(Model.PageNumber + 1)" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        }
+    </div>
+}

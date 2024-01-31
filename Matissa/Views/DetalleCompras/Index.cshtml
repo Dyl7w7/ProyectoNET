@@ -1,0 +1,96 @@
+﻿@using X.PagedList;
+@model IPagedList<matissa.Models.DetalleCompra>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/producto.css" asp-append-version="true"/>
+<script src="~/js/producto.js" asp-append-version="true"></script>
+<div class="container-fluid titulo-proveedor" id="ocultar">
+    <div class="row">
+        <div class="col">
+            <h1>Listado de productos</h1>
+         </div>
+    </div>
+</div>
+<div class="container p-5 container-tabla">
+    <div class="row">
+        <div class="col">
+            <table class="tabla text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            Precio unitario
+                        </th>
+                        <th>
+                            Cantidad
+                        </th>
+                        <th>
+                            Costo total unitario
+                        </th>
+                        <th>
+                            compra
+                        </th>
+                        <th>
+                            Producto
+                        </th>
+                        <th>
+                            Proveedor
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                $@item.PrecioUnitario.ToString("N1")
+                            </td>
+                            <td>
+                                @item.Cantidad
+                            </td>
+                            <td>
+                                $@item.CostoTotalUnitario.ToString("N1")
+                            </td>
+                            <td>
+                                @item.IdCompraNavigation.IdCompra
+                            </td>
+                            <td>
+                                @item.IdProductoNavigation.NombreProducto
+                            </td>
+                            <td>
+                                @item.IdProveedorNavigation.NombreProveedor
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col text-center">
+            <div class="col text-start">
+                <a asp-action="Index" asp-controller="Compras">
+                    <input type="button" class="boton-cancelar rounded-pill" value="Volver" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    <div class="d-flex justify-content-center mb-5">
+        <nav aria-label="Page navigation bg-dark">
+            <ul class="pagination">
+                @for (var i = 1; i <= Model.PageCount; i++)
+                {
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" href="?page=@i">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+}

@@ -1,0 +1,170 @@
+﻿@model IEnumerable<Matissa.Models.Rol>
+@section Scripts {
+    <script src="ruta-a-tu-libreria-sweetalert2"></script> <!-- Asegúrate de incluir la ruta correcta a SweetAlert2 -->
+
+    <script>
+        $(document).ready(function () {
+            // Verifica si hay un mensaje de éxito en TempData
+            var successMessage = '@TempData["SuccessMessage"]';
+
+            if (successMessage) {
+                // Muestra la alerta de éxito con SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: successMessage,
+                });
+            }
+        });
+    </script>
+}
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="error-message">
+        @ViewBag.ErrorMessage
+    </div>
+
+}
+
+<link rel="stylesheet" href="/css/roles/Roles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+<div class="container-fluid titulo-roles">
+    <div class="row">
+        <div class="col-12">
+            <h1>Listado de roles</h1>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-floating">
+                <input type="text" class="form-control rounded-pill buscar-rol" id="searchInput" placeholder="">
+                <label for="searchInput" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>Buscar rol</label>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <a asp-action="Create" class="crear-rol">
+                <p class="rounded-pill" style="padding-top: 8px;">Crear rol<i class="fa-regular fa-square-plus" style="font-size: 30px; margin-left:10%; margin-top:5px; "></i></p>
+            </a>
+        </div>
+    </div>
+</div>
+@* hhjj *@
+<div class="">
+    <table class="table table-bordered" style="width: 95%; margin-left: 25px;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdRol)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NombreRol)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+
+                <th colspan="3">
+                    Operaciones
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdRol)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreRol)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+
+                        <a asp-action="Edit" asp-route-id="@item.IdRol">
+                            <i class="fas fa-pen fa-xl iconos"></i>
+                        </a>
+
+                       @*  <a asp-action="Details" asp-route-id="@item.IdRol">
+                            <i class="fas fa-eye fa-xl iconos"></i>
+                        </a> *@
+
+                        <a asp-action="Delete" asp-route-id="@item.IdRol">
+                            <i class="fas fa-trash fa-xl iconos"></i>
+                        </a>
+
+                        <span>
+                            <label class="switch">
+                                <input id="@item.IdRol" class="btn-switch" type="checkbox" @(item.Estado == 1 ? "checked" : "") onchange="cambiarEstado(this)">
+                                <span class="lbl-switch slider"></span>
+                            </label>
+                        </span>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    function cambiarEstado(checkbox) {
+        var nuevoEstado = checkbox.checked ? 1 : 0;
+        var titulo = (nuevoEstado === 1) ? '¿Estás seguro de activar este rol?' : '¿Estás seguro de desactivar este rol?';
+
+        Swal.fire({
+            title: titulo,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire('Estado cambiado con éxito').then((result) => {
+                    if (result.isConfirmed) {
+                        var url = "/Roles/CambiarEstado/" + checkbox.id;
+                        window.location.href = url;
+                    }
+                });
+            } else {
+                // Si el usuario hace clic en "Cancelar", restaurar el estado original del checkbox
+                checkbox.checked = !checkbox.checked;
+            }
+        });
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#searchInput').on('input', function () {
+            var searchText = $(this).val().toLowerCase();
+
+            $('tbody tr').each(function () {
+                var idRol = $(this).find('td:eq(0)').text().toLowerCase();
+                var nombreRol = $(this).find('td:eq(1)').text().toLowerCase();
+                var estado = $(this).find('td:eq(2)').text().toLowerCase();
+
+                var isMatch = idRol.includes(searchText) || nombreRol.includes(searchText) || estado.includes(searchText);
+
+                $(this).toggle(isMatch);
+            });
+        });
+    });
+</script>
+

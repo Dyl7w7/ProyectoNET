@@ -1,0 +1,53 @@
+﻿@model Matissa.Models.Rol
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="/css/roles/Create.css">
+<link rel="stylesheet" href="/css/roles/Roles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+<div class="container-fluid titulo-roles">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <h1 class="">Informacion de rol</h1>
+        </div>
+    </div>
+</div>
+<form asp-action="Create" class="mt-5">
+   
+    <div class="container-fluid text-center">
+        <div class="col-6 mx-auto text-left text-center">
+            <div class="col">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <label asp-for="IdRol" class="control-label"></label>
+                <input asp-for="IdRol" class="form-control input1" />
+                <span asp-validation-for="IdRol" class="text-danger"></span>
+                @* <div>
+                    <input type="text" asp-for="NombreRol" placeholder="Nombre Rol" id="nombreRol" class="form-control text-center">
+                </div> *@
+            </div>
+            <div class="col">
+                <label asp-for="NombreRol" class="control-label"></label>
+                <input asp-for="NombreRol" class="form-control input2" />
+                <span asp-validation-for="NombreRol" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <div class="button">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br />
+<div class="mx-auto text-center">
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</div>

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Matissa.Models.Empleado>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="/css/empleados/Empleado.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+<div class="container-fluid titulo-empleados">
+    <div class="row">
+        <div class="col-12">
+            <h1>Listado de empleados</h1>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6"> <form asp-action="Index" asp-controller="Empleados" method="get"> <div class="form-floating"> <input type="text" class="form-control rounded-pill buscar-empleado" id="searchString" name="searchString" placeholder=""> <label for="searchString" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>Buscar empleado</label> </div> <input type="submit" value="Buscar" class="btn btn-primary" style="display: none;" /> </form> </div>
+        <div class="col-6">
+            <a asp-action="Create" class="crear-empleado">
+                <p class="rounded-pill" style="padding-top: 8px;">Crear empleado<i class="fa-regular fa-square-plus" style="font-size: 30px; margin-left:10%; margin-top:5px; "></i></p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered" style="width: 95%; margin-left: 25px;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreEmpleado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApellidoEmpleado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaContrato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Correo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dirección)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Teléfono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApellidoEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaContrato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dirección)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teléfono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdEmpleado"><i class="fas fa-edit"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.IdEmpleado"><i class="fas fa-info-circle"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdEmpleado"><i class="fas fa-trash-alt"></i></a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

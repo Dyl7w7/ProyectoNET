@@ -1,0 +1,78 @@
+﻿@model Matissa.Model.Usuario
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="/css/roles/Roles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+<div class="container-fluid titulo-roles">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <h1 class="">Estas seguro que quieres eliminar Usuario</h1>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 mx-auto text-center">
+        <div class=" col form-group">
+            <strong>
+            @Html.DisplayNameFor(model => model.NombreUsuario)
+            </strong>
+        </div>
+        <div class=" col form-group">
+            
+            @Html.DisplayFor(model => model.NombreUsuario)
+            
+        </div>
+        <div class=" col form-group">
+            <strong>
+            @Html.DisplayNameFor(model => model.Correo)
+            </strong>
+        </div>
+        <div class=" col form-group">
+            
+            @Html.DisplayFor(model => model.Correo)
+            
+        </div>
+        <div class=" col form-group">
+            <strong>
+            @Html.DisplayNameFor(model => model.Contraseña)
+            </strong>
+        </div>
+        <div class=" col form-group">
+            
+            @Html.DisplayFor(model => model.Contraseña)
+            
+        </div>
+        <div class=" col form-group">
+            <strong>
+            @Html.DisplayNameFor(model => model.Estado)
+            </strong>
+        </div>
+        <div class=" col form-group">
+           
+            @Html.DisplayFor(model => model.Estado)
+           
+        </div>
+        <div class=" col form-group">
+            <strong>
+            @Html.DisplayNameFor(model => model.IdRolNavigation)
+            </strong>
+        </div>
+        <div class=" col form-group">
+            
+            @Html.DisplayFor(model => model.IdRolNavigation.IdRol)
+           
+        </div>
+    </div>
+    </div>
+    
+    <div class="text-center">
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdUsuario" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+    </div>

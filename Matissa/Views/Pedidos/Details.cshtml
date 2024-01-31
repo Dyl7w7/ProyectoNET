@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Matissa.Models.DetallePedido>
+<link rel="stylesheet" href="~/css/pedido.css" asp-append-version="true" />
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-light p-3 text-center" style="background-color: #3cc3bd">
+    <h1 class="merienda">Detalles del pedido</h1>
+</div>
+<div class="container">
+    @{
+        int pedidoId = 0;
+        string clienteName = "";
+        int clienteId = 0;
+        DateTime fechaPedido = DateTime.Now;
+        string totalPedido = "";
+    }
+    @foreach (var pedido in Model)
+    {
+        pedidoId = pedido.IdPedido;
+        clienteName = pedido.IdPedidoNavigation.IdClienteNavigation.NombreCliente;
+        clienteId = pedido.IdPedidoNavigation.IdCliente;
+        fechaPedido = pedido.IdPedidoNavigation.FechaPedido;
+
+        var a = pedido.IdPedidoNavigation.PrecioTotalPedido;
+        string precioFormat = a.ToString("$ #,##0.00");
+
+        totalPedido = precioFormat;
+    }
+    <div class="container-fluid  text-center">
+        <div class="">
+            <h2>Información del pedido</h2>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label">Pedido</label>
+                <input type="text" class="form-control rounded-pill" value="@pedidoId" readonly />
+                <br />
+                <label class="form-label">Cédula cliente</label>
+                <input type="text" class="form-control rounded-pill" value="@clienteId" readonly />
+                <br />
+            </div>
+            <div class="col-6">
+                <label class="form-label">Fecha pedido</label>
+                <input type="text" class="form-control rounded-pill" value="@fechaPedido" readonly />
+                <br />
+                <label class="form-label">Nombre cliente</label>
+                <input type="text" class="form-control rounded-pill" value="@clienteName" readonly />
+                <br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label class="form-label">Precio total</label>
+                <input type="text" class="form-control rounded-pill" value="@totalPedido" readonly />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-fluid mt-4">
+        <div class="text-center">
+            <h4>Lista de productos</h4>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.IdProducto</td>
+                        <td>@item.IdProductoNavigation.NombreProducto</td>
+                        <td>@item.CantidadProducto</td>
+                        @{
+                            var a = item.PrecioUnitario;
+
+                            string precioFormat = a.ToString("$ #,##0.00");
+                        }
+                        <td>@precioFormat</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="text-center">
+    <a asp-action="Index"><input type="button" class="btn cancel-btn" value="Volver" /></a>
+</div>

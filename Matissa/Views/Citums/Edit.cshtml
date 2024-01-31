@@ -1,0 +1,68 @@
+﻿@model Matissa.Models.Citum
+
+@{
+    ViewData["Title"] = "editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/citas/create.css">
+<div class="container-fluid titulo-citas">
+    <div class="row">
+        <div class="col-12">
+            <h1>Editar Cita</h1>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <form asp-action="Edit">
+        <div class="col-md-4">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="IdCita" class="control-label"></label>
+                <input asp-for="IdCita" class="form-control custom-input rounded-pill" />
+                <span asp-validation-for="IdCita" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FechaRegistro" class="control-label"></label>
+                <input asp-for="FechaRegistro" class="form-control rounded-pill custom-input" />
+                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CostoTotal" class="control-label"></label>
+                <input asp-for="CostoTotal" class="form-control rounded-pill custom-input" />
+                <span asp-validation-for="CostoTotal" class="text-danger"></span>
+            </div>
+        </div> <!-- Cerrar la primera columna -->
+
+        <div class="col-md-4">
+            <!-- Segundo grupo de inputs -->
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control rounded-pill custom-input" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IdCliente" class="control-label"></label>
+                <select asp-for="IdCliente" class="form-control rounded-pill custom-input" asp-items="ViewBag.IdCliente"></select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-warning" />
+                <a class="btn btn-dark" asp-action="Index">Volver</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

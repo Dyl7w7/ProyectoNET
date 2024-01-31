@@ -1,0 +1,96 @@
+﻿@model matissa.Models.Producto
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+
+<div class="container-fluid titulo-proveedor" id="ocultar">
+    <div class="row">
+        <div class="col">
+            <h1>Agregar producto</h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col text-center">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="NombreProducto" class="control-label"></label>
+                            <input asp-for="NombreProducto" class="rounded-pill form-control text-center form-control border border-1 border-dark" />
+                            <span asp-validation-for="NombreProducto" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Descripción" class="control-label"></label>
+                            <input asp-for="Descripción" class="rounded-pill form-control text-center form-control border border-1 border-dark" />
+                            <span asp-validation-for="Descripción" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="FechaCaducidad" class="control-label"></label>
+                            <input asp-for="FechaCaducidad" class="rounded-pill form-control text-center form-control border border-1 border-dark" />
+                            <span asp-validation-for="FechaCaducidad" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="PrecioVenta" class="control-label"></label>
+                            <input asp-for="PrecioVenta" class="rounded-pill form-control text-center form-control border border-1 border-dark" />
+                            <span asp-validation-for="PrecioVenta" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="SaldoInventario" class="control-label"></label>
+                <input asp-for="SaldoInventario" class="form-control" value="0"/>
+                <span asp-validation-for="SaldoInventario" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" value="1"/>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="row justify-content-center botones align-items-center">
+                <div class="col text-end">
+                    <a asp-action="Index" class="boton-cancelar rounded-pill">Cancelar</a>
+                </div>
+                <div class="col text-start">
+                    <input type="button" value="Agregar" data-bs-toggle="modal" data-bs-target="#exampleModal" class="boton-aceptar rounded-pill" />
+                </div>
+            </div>
+            <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Aviso</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Estas seguro de que quieres agregar el producto?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="boton-cancelar rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" value="Agregar" class="boton-aceptar rounded-pill" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

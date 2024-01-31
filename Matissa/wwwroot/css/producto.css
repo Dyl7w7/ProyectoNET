@@ -1,0 +1,278 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
+
+.texto-merienda{
+    font-family: "Merienda";
+}
+
+.texto-quicksand{
+    font-family: "Quicksand";
+}
+
+body{
+    margin: 0;
+}
+
+.titulo-proveedor {
+    background-color: #3cc3bd;
+    color: white;
+    font-family: "Merienda";
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 1%;
+    border: 1px solid gray;
+}
+
+.titulo-agregar-proveedor {
+    background-color: #3cc3bd;
+    color: white;
+    font-family: "Merienda";
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 1px solid gray;
+}
+
+/* botones crear, hacer reporte y label buscar */
+
+.form-agregar-proveedor {
+    border: 1px solid gray;
+    margin-bottom: 5%;
+    text-align: center;
+    font-family: 'Quicksand';
+}
+
+.form-agregar-proveedor label {
+    margin-top: 10px;
+}
+
+.form-agregar-proveedor input {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.form-agregar-proveedor textarea {
+    margin-bottom: 15px;
+    margin-top: 10px;
+    border-radius: 15px;
+    border: 1px solid black;
+}
+
+.form-agregar-proveedor select {
+    margin-bottom: 15px;
+    margin-top: 10px;
+    width: 180px;
+    height: 25px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.botones {
+    margin-bottom: 2.5%;
+    margin-top: 2.5%;
+}
+
+.boton-agregar-detalle-compra {
+    margin-right: 20px;
+}
+
+.boton-cancelar {
+    padding: 0px 10px 0px 10px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
+    background: #ffffff;
+    color: #232323;
+    border-color: #232323;
+    border-width: 1px;
+    border-style: solid;
+    font-family: "Quicksand";
+    font-weight: bold;
+    margin-left: 40px;
+}
+
+.boton-aceptar {
+    padding: 0px 10px 0px 10px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
+    background: #444444;
+    color: #ffffff;
+    border-color: #444444;
+    border-width: 1px;
+    border-style: solid;
+    font-family: "Quicksand";
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.label-buscar {
+    font-size: 17px;
+    font-family: "Quicksand";
+}
+
+.reporte-crear {
+    width: 100%;
+    border: none;
+    background-color: #444444;
+    border-color: #444444;
+    border-width: 1px;
+    height: 100%;
+    color: white;
+    font-family: 'Quicksand';
+    font-size: 16px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.75);
+    padding-top: 15px;
+    text-decoration: none;
+}
+
+reporte-crear:hover {
+    color: inherit !important;
+}
+
+.reporte-crear:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+}
+
+@media screen and (max-width: 600px) {
+    .texto-media {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .reporte-crear {
+        font-size: 12px;
+    }
+}
+
+.icono-mas {
+    margin-left: 50px;
+}
+
+.icon-agregar-proveedor {
+    font-size: 30px;
+    margin-left: 2%;
+}
+
+.icon-generar-reporte {
+    font-size: 25px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+/*Estilo buscador*/
+
+.buscar-proveedor {
+    height: 100%;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.75);
+    border: 1px solid black;
+}
+
+.h100{
+    height: 100%;
+}
+
+/* Estilos tabla */
+
+.container-tabla{
+    overflow-x: auto;
+}
+
+.tabla {
+    border-color: #161616;
+    border-width: 1px;
+    border-style: solid;
+    width: 100%;
+    margin-top: 1vh;
+}
+
+.tabla tr:hover {
+    background-color: rgb(218, 217, 217);
+}
+
+.tabla th {
+    border: 1px solid #161616;
+    background-color: #e5e5e5;
+    padding: 17px;
+}
+
+.tabla td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.iconos {
+    color: #3cc3bd;
+    font-size: 20px;
+}
+
+.boton-editar {
+    color: #3cc3bd;
+}
+
+.botones {
+    margin-bottom: 2.5%;
+    margin-top: 2.5%;
+}
+
+.boton-cancelar {
+    padding: 5px 20px 5px 20px;
+    background: #ffffff;
+    color: #232323;
+    border-color: #232323;
+    border-width: 1px;
+    border-style: solid;
+    font-family: "Quicksand";
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.boton-cancelar:hover{
+    color: #232323;
+    text-decoration: none;
+}
+
+.boton-cancelar:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+}
+
+.boton-aceptar {
+    padding: 5px 20px 5px 20px;
+    background: #444444;
+    color: #ffffff;
+    border-color: #444444;
+    border-width: 1px;
+    border-style: solid;
+    font-family: "Quicksand";
+    font-weight: bold;
+}
+
+.boton-aceptar:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+}
+
+.boton-agregar {
+    padding: 5px 20px 5px 20px;
+    background: #ffffff;
+    color: #232323;
+    border-color: #232323;
+    border-width: 1px;
+    border-style: solid;
+    font-family: "Quicksand";
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.boton-agregar:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+}
+
+.icono-basura {
+    color: ##3cc3bd;
+}

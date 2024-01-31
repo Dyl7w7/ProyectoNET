@@ -1,0 +1,73 @@
+﻿@model Matissa.Model.Usuario
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/styleUsu/StyleC.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/f583145028.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Boogaloo&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cuerpo">
+        <h1>Cambio de contraseña</h1>
+        <form asp-action="CambiarContraseña">
+            <div class="registro">
+                <div class="bloque1">
+                    <div class="datosUsua">
+                        <div class="usua">
+
+                            <div class="idUsua">
+                                <input asp-for="IdUsuario" class="input" type="hidden" placeholder="001">
+
+                            </div>
+                        </div>
+                        <div class="nombreUsua">
+
+                            <div class="nombreInput">
+                                <input asp-for="NombreUsuario" class="input" type="hidden" placeholder="" id="nombreUsuario">
+                            </div>
+                        </div>
+                        <div class="Correo">
+
+                            <div class="nombreInput">
+                                <input asp-for="Correo" class="input" type="hidden" placeholder="example@gmail.com" id="nombreUsuario">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="datosUsua">
+
+                        <div class="" style="margin-left:20px">
+                            <h3>Nueva contraseña</h3>
+                            <div class="nombreInput">
+                                <input asp-for="Contraseña" class="input" type="password" placeholder="******" id="contrasena">
+                            </div>
+                        </div>
+                        <div class="rol" style="display: none;">
+
+                            <div class="idUsua">
+                                <select asp-for="IdRol" class="form-control" asp-items="ViewBag.IdRol"></select>
+                            </div>
+                        </div>
+                        <input type="hidden" value=1 id="Estado" name="Estado">
+                    </div>
+                </div>
+            </div>
+            <div class="botones">
+                <button type="submit" class="btnGuardar">Guardar</button>
+                <a asp-controller="Acceso" asp-action="Index" class="btnCancelar">Cancelar</a>
+            </div>
+        </form>
+
+    </div>
+
+
+</body>
+</html>

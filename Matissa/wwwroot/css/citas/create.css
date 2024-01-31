@@ -1,0 +1,38 @@
+﻿.titulo-citas {
+    background-color: #3cc3bd;
+    color: white;
+    font-family: "Merienda";
+    text-align: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border: 1px solid gray;
+}
+
+.custom-input{
+    border: 1px solid #e2e2e2;
+    width: 80%;
+    padding: 0.375rem 0.75rem;
+}
+.custom-hora {
+    border: 1px solid #e2e2e2;
+    width : 90%;
+    height : 90%
+}
+
+.servicio {
+    margin-left: 20px
+}
+
+.boton-cancelar {
+    background: white;
+    color: black;
+}
+
+.boton-aceptar {
+    background: #444444;
+    color: white;
+}
+
+

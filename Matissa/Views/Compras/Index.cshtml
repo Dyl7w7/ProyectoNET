@@ -1,0 +1,116 @@
+﻿@using X.PagedList;
+@model IPagedList<matissa.Models.Compra>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+<script src="~/js/producto.js" asp-append-version="true"></script>
+
+
+<div class="container-fluid titulo-proveedor" id="ocultar">
+    <div class="row">
+        <div class="col">
+            <h1>Listado de compras</h1>
+        </div>
+    </div>
+</div>
+<div class="container-fluid p-5">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
+            <div class="form-floating h100">
+                <form asp-action="Index" asp-controller="Compras" class="h100">
+                    <input name="busqueda" type="number" class="form-control rounded-pill buscar-proveedor" id="floatingInputInvalid" placeholder="Buscar...">
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
+            <button class="reporte-crear rounded-pill d-flex ov-btn-grow-ellipse justify-content-around align-items-center">
+                <p class="d-flex flex-grow-1 align-items-center justify-content-around"><i class="fa-solid fa-download icon-generar-reporte"></i>  <span class="texto-media">Generar reporte de compras</span></p>
+            </button>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
+            <a asp-action="Create" class="nav-link reporte-crear rounded-pill d-flex ov-btn-grow-ellipse justify-content-around align-items-center" value="mostrar">
+                <span class="texto-media">Crear compra</span> <i class="fa-solid fa-circle-plus icon-agregar-proveedor"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container p-5 container-tabla">
+    <div class="row">
+        <div class="col">
+            <table class="tabla text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            Código
+                        </th>
+                        <th>
+                            Descripción
+                        </th>
+                        <th>
+                            Fecha de la compra
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            Factura
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="@((item.Estado == 0)? "background-color: #CACACA": "")">
+                            <td>
+                                @item.IdCompra
+                            </td>
+                            <td>
+                                @item.Descripción
+                            </td>
+                            <td>
+                                @item.FechaCompra
+                            </td>
+                            <td>
+                                $@item.CostoTotalCompra.ToString("N1")
+                            </td>
+                            <td>
+                                @item.Factura
+                            </td>
+                                <td>@((item.Estado == 0)? "Anulado": "Activado")</td>
+                            <td>
+                                <a asp-action="Index" asp-controller="DetalleCompras" class="m-2" asp-route-id="@item.IdCompra"><i class="fa-solid fa-eye" style="color: #3cc3bf;"></i></a>
+                                <a asp-action="Anular" class="m-2 @((item.Estado == 0)? "d-none": "")" asp-route-id="@item.IdCompra"><i class="fa-solid fa-xmark" style="color: #3cc3bd;"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    <div class="d-flex justify-content-center mb-5">
+        <nav aria-label="Page navigation bg-dark">
+            <ul class="pagination">
+                @for (var i = 1; i <= Model.PageCount; i++)
+                {
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" href="?page=@i">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+}

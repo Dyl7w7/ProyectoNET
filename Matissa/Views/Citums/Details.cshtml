@@ -1,0 +1,51 @@
+﻿@model Matissa.Models.Citum
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="container text-center">
+    <link rel="stylesheet" href="~/css/citas/Citums.css">
+    <div class="container-fluid titulo-citas">
+        <div class="row">
+            <div class="col-12">
+                <h1>Detalle de citas</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.FechaRegistro)</th>
+                        <td>@Html.DisplayFor(model => model.FechaRegistro)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CostoTotal)</th>
+                        <td>@Html.DisplayFor(model => model.CostoTotal)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                        <td>@Html.DisplayFor(model => model.Estado)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.IdClienteNavigation)</th>
+                        <td>@Html.DisplayFor(model => model.IdClienteNavigation.IdCliente)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <a asp-action="Edit" asp-route-id="@Model?.IdCita" class="btn btn-warning">Editar</a> |
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

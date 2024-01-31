@@ -1,0 +1,291 @@
+﻿@model matissa.Models.DetalleCompra
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+<script src="~/js/producto.js" asp-append-version="true"></script>
+
+
+<div class="container-fluid titulo-proveedor" id="ocultar">
+    <div class="row">
+        <div class="col">
+            <h1>Detalles de la compra</h1>
+        </div>
+    </div>
+</div>
+<div class="container text-center">
+        <form asp-action="Create" method="post" class="border-bottom border-1 border-dark">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="IdProducto" class="control-label">Producto</label>
+                        <select asp-for="IdProducto" id="idProducto" class="rounded-pill text-center form-control border border-1 border-dark" asp-items="ViewBag.IdProducto" data-url="@Url.Action("DataProducto", "DetalleCompras")" onchange="dataProducto();">
+                            <option disabled selected>-- Selecciones un producto --</option>
+                        </select>
+                    </div>
+                    <div>
+                    <input id="nombreProducto" class="rounded-pill form-control text-center border border-1 border-dark" readonly />
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="IdProveedor" class="control-label">Proveedor</label>
+                        <select asp-for="IdProveedor" id="idProveedor" class="rounded-pill text-center form-control border border-1 border-dark" asp-items="ViewBag.IdProveedor" data-url="@Url.Action("DataProveedor", "DetalleCompras")" onchange="dataProveedor();">
+                            <option disabled selected>-- Seleccione un proveedor --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input id="nombreProveedor" class="rounded-pill text-center form-control border border-1 border-dark" readonly />
+                    </div>
+                </div>
+             </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="PrecioUnitario" class="control-label mt-3"></label>
+                        <input asp-for="PrecioUnitario" id="precio" class="rounded-pill text-center form-control border border-1 border-dark" value="0" />
+                        <span asp-validation-for="PrecioUnitario" class="text-danger" readonly></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="Cantidad" class="control-label mt-3"></label>
+                        <input asp-for="Cantidad" id="cantidad" onchange="costoTotalUnitario()" class="rounded-pill text-center form-control border border-1 border-dark" />
+                        <span asp-validation-for="Cantidad" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="CostoTotalUnitario" class="control-label mt-3"></label>
+                        <input asp-for="CostoTotalUnitario" id="costoTotal" class="rounded-pill form-control border text-center border-1 border-dark" readonly value="0" />
+                        <span asp-validation-for="CostoTotalUnitario" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        <div class="row mt-3">
+                <div class="col text-end">
+                    <a asp-action="DeleteCompra" asp-controller="Compras">
+                        <input type="button" class="boton-cancelar rounded-pill" value="Cancelar" />
+                    </a>
+                </div>
+                <div class="col text-start">
+                    <input type="button" value="Crear" data-bs-toggle="modal" data-bs-target="#exampleModal" class="boton-aceptar rounded-pill" />
+                </div>
+            </div>
+            <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Aviso</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Estas seguro de que quieres crear la compra?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="boton-cancelar rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" value="Crear" class="boton-aceptar rounded-pill" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-3 mb-3 agregarProducto">
+                    <button type="button" class="mt-3 boton-agregar btn cancel-btn border border-1 border-dark rounded-pill" id="btnAgregarC" onclick="agregarCompra()" style="width: 100%">
+                        Agregar detalle
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    <div class="container mt-5 container-tabla">
+            <table class="tabla text-center" id="tablaProductos">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th colspan="2">Producto</th>
+                        <th colspan="2">Proveedor</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Costo Total</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+    <script>
+        var listProducts = [];
+        function agregarCompra() {
+            let producto = document.getElementById("idProducto").value;
+            let proveedor = document.getElementById("idProveedor").value;
+            let nombreProducto = document.getElementById("nombreProducto").value;
+            let nombreProveedor = document.getElementById("nombreProveedor").value;
+            let cantidad = document.getElementById("cantidad").value;
+            let precio = document.getElementById("precio").value;
+            let costoTotal = document.getElementById("costoTotal").value;
+
+            var subtotal = precio * cantidad;
+
+            var obj = {
+                idProducto: producto,
+                idProveedor: proveedor,
+                nombreProducto: nombreProducto,
+                nombreProveedor: nombreProveedor,
+                cantidad: cantidad,
+                precio: precio,
+                costoTotal: costoTotal
+            }
+            let indiceRegister = listProducts.findIndex(detalle => detalle.idProducto === producto);
+            if (indiceRegister == -1) {
+                listProducts.push(obj);
+
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("AgregarProducto","DetalleCompras")", // Reemplaza con la URL de tu controlador
+                    contentType: "application/json; charset=utf-8",
+                    data: obj,
+                    success: function (response) {
+                        // Manejar la respuesta del servidor si es necesario
+                        console.log(response.message);
+
+                    },
+                    error: function (error) {
+                        console.error("Error al guardar detalles", error);
+                    }
+                });
+
+                mostrarDetalles();
+            } else {
+                alert("El producto ya existe en la lista");
+            }
+        }
+
+        function mostrarDetalles() {
+            // Limpiar el contenido actual del tbody
+            var tbody = document.getElementById("tablaProductos").getElementsByTagName("tbody")[0];
+            tbody.innerHTML = "";
+            // Crear las filas con detalles y agregarlas al tbody
+            for (var i = 0; i < listProducts.length; i++) {
+                var detalle = listProducts[i];
+
+                // Crear una nueva fila en el tbody
+                var row = tbody.insertRow(i);
+
+                // Insertar celdas con los datos del detalle en la fila
+                var cellIndex = row.insertCell(0);
+                cellIndex.innerHTML = i + 1;
+
+                var cellProducto = row.insertCell(1);
+                cellProducto.innerHTML = detalle.idProducto;
+
+                var cellNombreProducto = row.insertCell(2);
+                cellNombreProducto.innerHTML = detalle.nombreProducto;
+
+                var cellProveedor = row.insertCell(3);
+                cellProveedor.innerHTML = detalle.idProveedor;
+
+                var cellNombreProveedor = row.insertCell(4);
+                cellNombreProveedor.innerHTML = detalle.nombreProveedor;
+
+                var cellCantidad = row.insertCell(5);
+                cellCantidad.innerHTML = detalle.cantidad;
+
+                var cellPrecio = row.insertCell(6);
+                cellPrecio.innerHTML = detalle.precio;
+
+                var cellCostoTotal = row.insertCell(7);
+                cellCostoTotal.innerHTML = detalle.costoTotal;
+
+                var cellDelete = row.insertCell(8);
+                cellDelete.innerHTML = `
+                    <button type="button" class="btn" onclick="removeProducto(${detalle.idProducto})">
+                                <i class="fa-solid fa-trash" style="color: #3cc3bd;"></i>
+                    </button>`
+                // Puedes agregar más celdas según sea necesario
+            }
+        }
+
+        function removeProducto(idProducto) {
+            let indiceRemove = listProducts.findIndex(detalle => detalle.idProducto === idProducto);
+            listProducts.splice(indiceRemove, 1);
+
+            $.ajax({
+                url: "@Url.Action("RemoveProducto","DetalleCompras")",
+                type: "GET",
+                data: { idProducto: idProducto },
+                success: function (response) {
+                    console.log(response.message);
+                },
+                error: function (error) {
+                    console.error("Error al guardar detalles", error);
+                }
+            });
+
+            mostrarDetalles();
+        }
+
+        function dataProducto() {
+            $(document).ready(function () {
+                var productId = $("#idProducto").val(); // Obtener el ID del producto desde algún lugar en tu página
+                $.ajax({
+                    url: $("#idProducto").data("url"), // Ruta al controlador y acción
+                    type: "GET",
+                    data: { idProducto: productId },
+                    success: function (data) {
+                        // Manejar los datos del producto devueltos por el servidor
+                        let precio = document.getElementById("precio").value = data.precioVenta;
+                        let nombre = document.getElementById("nombreProducto").value = data.nombreProducto;
+                        console.log(data);
+                        // Aquí puedes actualizar tu interfaz de usuario con los datos del producto
+                    },
+                    error: function () {
+                        alert("Error al obtener los datos del producto");
+                    }
+                });
+            });
+        }
+
+        function dataProveedor() {
+            $(document).ready(function () {
+                var proveedorId = $("#idProveedor").val(); // Obtener el ID del producto desde algún lugar en tu página
+                $.ajax({
+                    url: $("#idProveedor").data("url"), // Ruta al controlador y acción
+                    type: "GET",
+                    data: { idProveedor: proveedorId },
+                    success: function (data) {
+                        // Verifica si los datos están definidos antes de asignarlos
+                        if (data && data.nombreProveedor) {
+                            let nombre = document.getElementById("nombreProveedor").value = data.nombreProveedor;
+                            console.log(data);
+                        } else {
+                            console.error("Error: Los datos del proveedor no son válidos");
+                        }
+                    },
+                    error: function () {
+                        alert("Error al obtener los datos del producto");
+                    }
+                });
+            });
+        }
+        function costoTotalUnitario() {
+            let cantidad = document.getElementById("cantidad").value;
+            let precio = document.getElementById("precio").value;
+
+            let costoTotal = cantidad * precio;
+
+            console.log(costoTotal);
+
+            document.getElementById("costoTotal").value = costoTotal;
+        }
+    </script>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

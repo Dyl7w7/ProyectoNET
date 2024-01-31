@@ -1,0 +1,123 @@
+﻿@model Matissa.Model.Usuario
+@{
+    Layout = null;
+
+    var msg = TempData["Accesso"] as string;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="/css/login/Login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    
+    <div class="row mt-5">
+        
+        <div class="col-sm-4 offset-sm-4" style="box-shadow: 10px 10px black;">
+            <form method="post" asp-controller="Acceso" asp-action="Login">
+                <div class="conteiner">
+                    <div class="cont-registro">
+                        <div class="links">
+                            <div class="separador">
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="form">
+                            <h1>Bienvenidos a Matissa</h1>
+                            @if (!string.IsNullOrEmpty(msg))
+                            {
+                                <div class="container alert-warning" style="background-color: #CD5C5C; font-family: '', cursive; text-align: center; font-size: smaller;">
+                                    @msg
+                                </div>
+                            }
+                            <div class="fields">
+                                <input type="text" name="username" id="usuario" placeholder="Usuario">
+                                <div id="usuarioAlert" class="alert alert-danger" style="display: none; color:red;">
+                                    <strong>Error!</strong> Usuario es requerido.
+                                </div>
+                                <input type="password" name="password" id="password" placeholder="Contraseña">
+                                <div id="passwordAlert" class="alert alert-danger" style="display: none; color:red;">
+                                    <strong>Error!</strong> Contraseña es requerida.
+                                </div>
+                            </div>
+
+                            <div class="button">
+                            <input type="submit" value="Ingresar" class="ingresar">
+
+                            </div>
+                            @* <div class="restore-link">
+                                <a href="CambiarContraseña">Cambiar Contraseña</a>
+                            </div> *@
+                        </div>
+                    </div>
+                    <div class="cont-registro2">
+
+                        <div class="list">
+                            <img class="logo" src="./images/logo.png" width="40%" alt="">
+                            <ul>
+                                <li>
+                                    Manicure
+                                </li>
+                                <li>
+                                    Uñas acrilicas
+                                </li>
+                                <li>
+                                    Cepillado
+                                </li>
+                                <li>
+                                    Corte
+                                </li>
+                                <li>
+                                    Keratina
+                                </li>
+                                <li>
+                                    Limpieza facial
+                                </li>
+                                <li>
+                                    Peinados para niñas
+                                </li>
+                                <li>
+                                    Depilación con cera
+                                </li>
+                                <li>
+                                    Cejas de Bigen
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $('form').on('submit', function (e) {
+            var usuario = $('#usuario').val();
+            var password = $('#password').val();
+
+            if (!usuario) {
+                $('#usuarioAlert').show();
+                e.preventDefault();
+            } else {
+                $('#usuarioAlert').hide();
+            }
+
+            if (!password) {
+                $('#passwordAlert').show();
+                e.preventDefault();
+            } else {
+                $('#passwordAlert').hide();
+            }
+        });
+    });
+</script>

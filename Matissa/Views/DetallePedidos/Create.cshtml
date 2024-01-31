@@ -1,0 +1,235 @@
+﻿@model Matissa.Models.DetallePedido
+<link rel="stylesheet" href="~/css/pedido.css" asp-append-version="true" />
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-light p-3 text-center" style="background-color: #3cc3bd">
+    <h1 class="merienda">Listado de pedidos</h1>
+</div>
+
+@{
+    var mensaje = TempData["Mensaje"] as string;
+}
+@if (!string.IsNullOrEmpty(mensaje))
+{
+    <div class="alert-warning p-2 text-center">
+        @mensaje
+    </div>
+}
+
+<div class="container mt-5 mb-3">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-5">
+                <div class="form-group">
+                    <label asp-for="IdProducto" class="control-label">Seleccione producto</label>
+                    <select asp-for="IdProducto" id="idProducto" data-url="@Url.Action("DataProducto", "DetallePedidos")" class="form-control rounded-pill" onchange="dataProducto();" asp-items="ViewBag.IdProducto">
+                        <option disabled selected>-- Seleccione producto --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input class="form-control rounded-pill" id="nombre" readonly/>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="form-group">
+                    <label asp-for="CantidadProducto" class="control-label">Cantidad</label>
+                    <input asp-for="CantidadProducto" id="cantidad" min="1" class="form-control rounded-pill" />
+                    <span asp-validation-for="CantidadProducto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input class="form-control rounded-pill" id="precio" readonly />
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <input type="submit" value="Aceptar" class="btn acept-btn" />
+            <a asp-action="DeletePedido" asp-controller="DetallePedidos">
+                <input type="button" class="btn cancel-btn" value="Cancelar" />
+            </a>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-3 mb-3 agregarProducto">
+            <button type="button" class="btn cancel-btn" id="btnAgregarP" onclick="agregarProducto()" style="width: 100%">
+                Agregar producto
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="container container-tabla">
+        <table class="tabla text-center" id="tablaProductos">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script>
+    var listProducts = [];
+    var cantidadActual = 0;
+    function agregarProducto() {
+        let producto = document.getElementById("idProducto").value;
+        let nombre = document.getElementById("nombre").value;
+        let cantidad = document.getElementById("cantidad").value;
+        let precio = document.getElementById("precio").value;
+
+        var subtotal = precio * cantidad;
+
+        var obj = {
+            idProducto: producto,
+            nombre: nombre,
+            cantidad: cantidad,
+            subtotal: subtotal
+        }
+        if (cantidadActual >= cantidad) {
+            let indiceRegister = listProducts.findIndex(detalle => detalle.idProducto === producto);
+            if (indiceRegister == -1 && cantidad > 0) {
+                listProducts.push(obj);
+
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("AgregarProducto","DetallePedidos")", // Reemplaza con la URL de tu controlador
+                    contentType: "application/json; charset=utf-8",
+                    data: obj,
+                    success: function (response) {
+                        // Manejar la respuesta del servidor si es necesario
+                        console.log(response.message);
+
+                    },
+                    error: function (error) {
+                        console.error("Error al guardar detalles", error);
+                    }
+                });
+
+                mostrarDetalles();
+            } else {
+                if (cantidad < 1) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Cantidad no válida",
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "El producto ya existe en la lista",
+                    });
+                }
+            }
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No hay suficientes productos",
+            });
+        }
+    }
+
+    function mostrarDetalles() {
+        // Limpiar el contenido actual del tbody
+        var tbody = document.getElementById("tablaProductos").getElementsByTagName("tbody")[0];
+        tbody.innerHTML = "";
+        // Crear las filas con detalles y agregarlas al tbody
+        for (var i = 0; i < listProducts.length; i++) {
+            var detalle = listProducts[i];
+
+            // Crear una nueva fila en el tbody
+            var row = tbody.insertRow(i);
+
+            // Insertar celdas con los datos del detalle en la fila
+            var cellIndex = row.insertCell(0);
+            cellIndex.innerHTML = i + 1;
+
+            var cellProducto = row.insertCell(1);
+            cellProducto.innerHTML = detalle.idProducto;
+
+            var cellNombre = row.insertCell(2);
+            cellNombre.innerHTML = detalle.nombre;
+
+            var cellCantidad = row.insertCell(3);
+            cellCantidad.innerHTML = detalle.cantidad;
+
+            var a = detalle.subtotal; // Supongo que detalle.subtotal es tu número
+            var precioFormat = a.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            var cellSubtotal = row.insertCell(4);
+            cellSubtotal.innerHTML = precioFormat;
+
+
+            // var cellSubtotal = row.insertCell(4);
+            // cellSubtotal.innerHTML = detalle.subtotal;
+
+            var cellDelete = row.insertCell(5);
+            cellDelete.innerHTML = `
+            <button type="button" class="btn btn-warning" onclick="removeProducto(${detalle.idProducto})">
+                <i class="fa-solid fa-trash"></i>
+            </button>`
+            // Puedes agregar más celdas según sea necesario
+        }
+    }
+   
+    function removeProducto(idProducto) {
+        let indiceRemove = listProducts.findIndex(detalle => detalle.idProducto === idProducto);
+        listProducts.splice(indiceRemove, 1);
+
+        $.ajax({
+            url: "@Url.Action("RemoveProducto","DetallePedidos")",
+            type: "GET",
+            data: { idProducto: idProducto },
+            success: function (response) {
+                console.log(response.message);
+            },
+            error: function (error) {
+                console.error("Error al guardar detalles", error);
+            }
+        });
+
+        mostrarDetalles();
+    }
+
+    function dataProducto() {
+        $(document).ready(function () {
+            var productId = $("#idProducto").val(); // Obtener el ID del producto desde algún lugar en tu página
+            $.ajax({
+                url: $("#idProducto").data("url"), // Ruta al controlador y acción
+                type: "GET",
+                data: { idProducto: productId },
+                success: function (data) {
+                    // Manejar los datos del producto devueltos por el servidor
+                    let precio = document.getElementById("precio").value = data.precioVenta;
+                    let nombre = document.getElementById("nombre").value = data.nombreProducto;
+                    cantidadActual = data.saldoInventario;
+                    console.log(data);
+                    // Aquí puedes actualizar tu interfaz de usuario con los datos del producto
+                },
+                error: function () {
+                    alert("Error al obtener los datos del producto");
+                }
+            });
+        });
+    }
+    
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,42 @@
+﻿@model Matissa.Models.Rol
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="/css/roles/Roles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+<div class="container-fluid titulo-roles">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <h1 class="">Editar rol</h1>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 mx-auto text-center">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdRol" />
+            <div class=" col form-group">
+                <label asp-for="NombreRol" class="control-label"></label>
+                <input asp-for="NombreRol" class="form-control" />
+                <span asp-validation-for="NombreRol" class="text-danger"></span>
+            </div>
+            <div class="col form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-secondary" >Back to List</a>
+</div>
+

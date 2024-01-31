@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Matissa.Models.Servicio>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/citas/Citums.css">
+    <div class="container-fluid titulo-citas">
+        <div class="row">
+          <div class="col-12">
+            <h1>Listado de Servicios</h1>
+          </div>
+        </div>
+    </div>
+
+<div class="container-fluid">
+    <div class="row d-flex">
+        <div class="col-md-6 mb-3">
+            <div class="form-floating">
+                <input type="text" class="form-control rounded-pill" id="searchInput">
+                <label for="inputBuscar" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i> Buscar por servicio...</label>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 d-flex justify-content-end">
+            <button onclick="window.location.href = '@Url.Action("Create", "Servicios")';" class="btn crear">
+                <p class="rounded-pill">Crear Servicio <i class="fa-regular fa-square-plus" style="font-size: 20px; margin-left: 10px;"></i></p>
+            </button>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<table class="table" style="width: 90%;margin:auto" id="tablaServicios" table-striped table-bordered" >
+    <thead style="background-color: lightgray;">
+        <tr>
+            <th style="background-color: lightgray">
+                @Html.DisplayNameFor(model => model.NombreServicio)
+            </th>
+            <th style="background-color: lightgray ">
+                @Html.DisplayNameFor(model => model.Descripción)
+            </th >
+            <th style="background-color: lightgray ">
+                @Html.DisplayNameFor(model => model.Duración)
+            </th>
+            <th style="background-color: lightgray ">
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th style="background-color: lightgray ">
+                @Html.DisplayNameFor(model => model.Estado)
+            </th >
+            <th style="background-color: lightgray ">
+                @Html.DisplayNameFor(model => model.IdTipoServicioNavigation)
+            </th>
+            <th style="background-color: lightgray ">
+                Operaciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreServicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripción)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duración)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTipoServicioNavigation.IdTipoServicio)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdServicio"><i class="fa-solid fa-pencil" style="color:#3CC3BD;"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.IdServicio"><i class="fa-sharp fa-solid fa-eye" style="color:#929292"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdServicio"><i class="fa-sharp fa-solid fa-circle-xmark" style="color:#929292"></i></a>
+            </td>
+        </tr>
+}
+        <script>
+
+            const searchInput = document.getElementById('searchInput');
+
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.toLowerCase();
+
+
+                const rows = document.querySelectorAll('#tablaServicios tbody tr');
+
+                rows.forEach(function (row) {
+                    const nombreServicio = row.querySelector('td:first-child').textContent.toLowerCase();
+
+                    if (nombreServicio.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+    </tbody>
+</table>
+

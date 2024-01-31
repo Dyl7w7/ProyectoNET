@@ -1,0 +1,98 @@
+﻿/* Estilos para el contenedor del título de roles */
+.titulo-roles {
+    background-color: #3cc3bd;
+    color: white;
+    font-family: "Merienda";
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 10%;
+    border: 1px solid gray;
+}
+
+
+/* Estilos para el formulario */
+form {
+    margin-top: 20px;  /*Margen superior para separar del título */
+}
+
+/* Estilos para las etiquetas y los campos de entrada */
+label.control-label {
+    font-weight: bold; /* Texto de etiqueta en negrita */
+}
+
+/* Estilos para los campos de entrada */
+.input1,
+.input2,
+.form-control {
+    width: 100%; /* Ancho del campo de entrada al 100% del contenedor */
+    margin-bottom: 10px; /* Margen inferior para separar los campos */
+}
+
+/* Estilos para el botón de envío */
+.btn-primary {
+    background-color: #3cc3bd; /* Color de fondo del botón principal */
+    border-color: #3cc3bd; /* Color del borde del botón principal */
+    color: white; /* Color del texto del botón principal */
+    margin-top: 10px; /* Margen superior para separar del enlace de regreso */
+}
+
+/* Estilos para el enlace de regreso */
+a {
+    display: block; /* Para que ocupe toda la anchura del contenedor */
+    text-align: center; /* Centrar el texto */
+    color: #3cc3bd; /* Color del enlace de regreso */
+    margin-top: 10px; /* Margen superior para separar del botón de envío */
+}
+
+    /* Estilos para el enlace "Back to List" */
+    a:hover {
+        text-decoration: underline; /* Subrayar en el hover */
+    }
+
+/* Estilos adicionales para los elementos específicos de la vista */
+.label-buscar {
+    font-size: 17px;
+    font-family: "Quicksand";
+}
+
+.crear-rol {
+    text-decoration: none;
+}
+
+    .crear-rol p {
+        background-color: #444444;
+        height: 100%;
+        color: white;
+        font-family: 'Quicksand';
+        font-size: 17px;
+        padding-top: 15px;
+        text-align: center;
+        box-shadow: 3px 7px 10px black;
+        text-decoration: none;
+    }
+
+.buscar-proveedor {
+    box-shadow: 3px 7px 10px black;
+}
+
+.table {
+    text-align: center;
+    margin-top: 10%;
+}
+
+    .table tr th {
+        background-color: #e2d4ff;
+    }
+
+.iconos {
+    color: #3cc3bd;
+    font-size: 20px;
+}
+
+.boton-editar {
+    color: #3cc3bd;
+}
+
+/* Estilos para el switch */
+/* ... (Mantén los estilos del switch que proporcionaste) */

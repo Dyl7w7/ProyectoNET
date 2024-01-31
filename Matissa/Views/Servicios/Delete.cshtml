@@ -1,0 +1,66 @@
+﻿@model Matissa.Models.Servicio
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="container text-center" style="width: 100%">
+    <link rel="stylesheet" href="~/css/citas/Citums.css">
+    <div class="container-fluid titulo-citas" >
+        <div class="row">
+            <div class="col-12">
+                <h1>Eliminar Servicio</h1>
+            </div>
+        </div>
+    </div>
+
+        <div>
+            <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NombreServicio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NombreServicio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripción)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descripción)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Duración)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Duración)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdTipoServicioNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdTipoServicioNavigation.IdTipoServicio)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdServicio" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a class="btn btn-dark" asp-action="Index">Back to List</a>
+    </form>
+</div>
+</div>
